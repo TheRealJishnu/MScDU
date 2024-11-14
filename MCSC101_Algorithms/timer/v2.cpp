@@ -121,20 +121,30 @@ string gibberish(int size)
 }
 
 int main() {
-    double sum1 = 0, sum2 = 0;
-    size_t iter = 100;
-    for(size_t i=1; i<=iter; i++){
-        string a = gibberish(1);
-        string b = gibberish(1);
-        // cout << a << " " << b << endl;
+    ofstream outfile("dp_data.txt", ios::app);
 
-        vector<vector<int>> dp(a.size()+1, vector<int>(b.size()+1, 0));
-        pair<double, double> time = stringAlign(a, b);
-        sum1 += time.first;
-        sum2 += time.second;
+    if (!outfile) {
+        cerr << "Error opening file for writing!" << endl;
+        return 1;
     }
-    sum1 /= iter;
-    sum2 /= iter;
-    cout << sum1 << "\t\t" << sum2 << endl;
+
+    for(size_t i=1; i<=10e+01; i++){
+        double sum1 = 0, sum2 = 0;
+        size_t iter = 100;
+        for(size_t j=1; j<=iter; j++){
+            string a = gibberish(1);
+            string b = gibberish(1);
+            // cout << a << " " << b << endl;
+
+            vector<vector<int>> dp(a.size()+1, vector<int>(b.size()+1, 0));
+            pair<double, double> time = stringAlign(a, b);
+            sum1 += time.first;
+            sum2 += time.second;
+        }
+        sum1 /= iter;
+        sum2 /= iter;
+        outfile << endl << i << " " << sum1 << "\t" << sum2;
+    }
+    outfile.close();
     
 }

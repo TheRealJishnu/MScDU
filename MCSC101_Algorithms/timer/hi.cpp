@@ -27,6 +27,7 @@ int main() {
     for (size_t i = 0; i < memoizationData.size(); ++i) {
         outfile << i << "\t\t\t" << memoizationData[i] << "\t\t\t" << tabulationData[i] << endl;
     }
+    
 
     // Close the file after writing
     outfile.close();
