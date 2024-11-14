@@ -69,8 +69,8 @@ pair<double, double> stringAlign(string x, string y){
     auto end = std::chrono::steady_clock::now();
     auto diff = end - start;
     auto time1 = std::chrono::duration<double, std::nano>(diff).count();
-    cout << "Memoization Judgement of Chronos : ";
-    std::cout << std::chrono::duration<double, std::nano>(diff).count() << " nano-second" << std::endl;
+    // cout << "Memoization Judgement of Chronos : ";
+    // std::cout << std::chrono::duration<double, std::nano>(diff).count() << " nano-second" << std::endl;
 
     // Time for Tabulation
     start = std::chrono::steady_clock::now();
@@ -79,8 +79,8 @@ pair<double, double> stringAlign(string x, string y){
 
     diff = end - start;
     auto time2 = std::chrono::duration<double, std::nano>(diff).count();
-    cout << "Tabulation Judgement of Chronos : ";
-    std::cout << std::chrono::duration<double, std::nano>(diff).count() << " nano-second" << std::endl;
+    // cout << "Tabulation Judgement of Chronos : ";
+    // std::cout << std::chrono::duration<double, std::nano>(diff).count() << " nano-second" << std::endl;
 
     pair<double, double> time;
     time.first = time1;
@@ -122,20 +122,19 @@ string gibberish(int size)
 
 int main() {
     double sum1 = 0, sum2 = 0;
-    for(size_t i=1; i<=10; i++){
-        string a = gibberish(1100);
-        string b = gibberish(1100);
+    size_t iter = 100;
+    for(size_t i=1; i<=iter; i++){
+        string a = gibberish(1);
+        string b = gibberish(1);
         // cout << a << " " << b << endl;
-        // string a;
-        // string b;
-        // cin >> a >> b;
+
         vector<vector<int>> dp(a.size()+1, vector<int>(b.size()+1, 0));
         pair<double, double> time = stringAlign(a, b);
         sum1 += time.first;
         sum2 += time.second;
     }
-    sum1 /= 10;
-    sum2 /= 10;
+    sum1 /= iter;
+    sum2 /= iter;
     cout << sum1 << "\t\t" << sum2 << endl;
     
 }
