@@ -20,7 +20,7 @@ ll mainMemoi(vector<vector<ll>>& memo, const string& x, const string& y, const v
     return memo[i][j];
 }
 
-ll mainTabulation(vector<vector<int>>& dp, string x, string y, vector<vector<int>> alph, int delta){
+ll mainTabulation(vector<vector<ll>>& dp, string x, string y, vector<vector<int>> alph, int delta){
     // Initial Base Cases
     for(int i = 0; i <= x.size(); i++){
         dp[i][0] = i * delta;
@@ -60,7 +60,7 @@ pair<double, double> stringAlign(string x, string y){
                 alph[i][j] = 3;
         }
     }
-    vector<vector<int>> dp(x.size()+1, vector<int>(y.size()+1, -1));
+    vector<vector<ll>> dp(x.size()+1, vector<ll>(y.size()+1, -1));
     vector<vector<ll>> memo(x.size()+1, vector<ll>(y.size()+1, -1));
 
     // Time for Memoization
@@ -69,9 +69,9 @@ pair<double, double> stringAlign(string x, string y){
     auto end = std::chrono::steady_clock::now();
     auto diff = end - start;
     auto time1 = std::chrono::duration<double, std::nano>(diff).count();
-    // cout << "Memoization Judgement of Chronos : ";
-    // std::cout << std::chrono::duration<double, std::nano>(diff).count() << " nano-second" << std::endl;
-
+    cout << "Memoization Judgement of Chronos : ";
+    std::cout << std::chrono::duration<double, std::nano>(diff).count() << " nano-second" << std::endl;
+ 
     // Time for Tabulation
     start = std::chrono::steady_clock::now();
     mainTabulation(dp, x, y, alph, delta);
@@ -79,8 +79,8 @@ pair<double, double> stringAlign(string x, string y){
 
     diff = end - start;
     auto time2 = std::chrono::duration<double, std::nano>(diff).count();
-    // cout << "Tabulation Judgement of Chronos : ";
-    // std::cout << std::chrono::duration<double, std::nano>(diff).count() << " nano-second" << std::endl;
+    cout << "Tabulation Judgement of Chronos : ";
+    std::cout << std::chrono::duration<double, std::nano>(diff).count() << " nano-second" << std::endl;
 
     pair<double, double> time;
     time.first = time1;
@@ -127,22 +127,23 @@ int main() {
         cerr << "Error opening file for writing!" << endl;
         return 1;
     }
-
-    for(size_t i=1; i<=10e+01; i++){
+    size_t i=1;
+    for(size_t i=100; i<=200; i++){
         double sum1 = 0, sum2 = 0;
-        size_t iter = 100;
+        size_t iter = 1;
         for(size_t j=1; j<=iter; j++){
-            string a = gibberish(1);
-            string b = gibberish(1);
+            string a = gibberish(i);
+            string b = gibberish(i);
             // cout << a << " " << b << endl;
 
-            vector<vector<int>> dp(a.size()+1, vector<int>(b.size()+1, 0));
+            // vector<vector<int>> dp(a.size()+1, vector<int>(b.size()+1, 0));
             pair<double, double> time = stringAlign(a, b);
             sum1 += time.first;
             sum2 += time.second;
         }
         sum1 /= iter;
         sum2 /= iter;
+        // cout << endl << i << " " << sum1 << "\t" << sum2;
         outfile << endl << i << " " << sum1 << "\t" << sum2;
     }
     outfile.close();
